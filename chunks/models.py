@@ -1,5 +1,15 @@
 from django.db import models
 
+class ChunkManager(models.Manager):
+
+    def get_by_key(key, default_value=None):
+        
+        try:
+            return self.get(key=key)
+        except self.model.DoesNotExist:
+            return default_value
+
+
 class Chunk(models.Model):
     """
     A Chunk is a piece of content associated
@@ -10,5 +20,7 @@ class Chunk(models.Model):
     key = models.CharField(help_text="A unique name for this chunk of content", blank=False, max_length=255, unique=True)
     content = models.TextField(blank=True)
 
+    objects = ChunkManager()
+    
     def __unicode__(self):
         return u"%s" % (self.key,)
