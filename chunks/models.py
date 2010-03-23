@@ -2,10 +2,10 @@ from django.db import models
 
 class ChunkManager(models.Manager):
 
-    def get_by_key(key, default_value=None):
+    def get_content_by_key(key, default_value=None):
         
         try:
-            return self.get(key=key)
+            return self.get(key=key).content
         except self.model.DoesNotExist:
             return default_value
 
